@@ -70,6 +70,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private static Transform2d RobotToTurret = new Transform2d(-0.1, 0, Rotation2d.fromDegrees(0));
   private static FieldObject2d turret = field.getObject("Turret");
+  private static FieldObject2d HubFieldPose = field.getObject("HubPose");
+  private static Pose2d HubPose = new Pose2d(0,0, new Rotation2d());
 
   private StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
   .getStructTopic("MyPose", Pose2d.struct).publish();
@@ -100,6 +102,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     configurePathPlanner();
 
+    
 
     //Logging
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -135,9 +138,9 @@ public class SwerveSubsystem extends SubsystemBase {
     //odometry.update(getRotation2d(), getModulePositions());//USE THIS WHEN TESTING AUTOS WITHOUT FIELD LOCALIZATION
     resetOdometry(poseEstimator.getEstimatedPosition());
 
-    turret.setPose(new Pose2d(turretToField().getTranslation(), turretRotationToPose(new Pose2d(0,0, new Rotation2d()))));
-
     field.setRobotPose(poseEstimator.getEstimatedPosition());
+    turret.setPose(new Pose2d(turretToField().getTranslation(), turretRotationToPose(HubPose)));
+    HubFieldPose.setPose(HubPose);   
 
     publisher.set(poseEstimator.getEstimatedPosition());
   }
