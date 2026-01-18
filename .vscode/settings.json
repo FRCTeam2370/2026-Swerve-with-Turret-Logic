@@ -1,0 +1,81 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.server.launchMode": "Standard",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "bin/": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/*~": true
+  },
+  "java.test.config": [
+    {
+      "name": "WPIlibUnitTests",
+      "workingDirectory": "${workspaceFolder}/build/jni/release",
+      "vmargs": [ "-Djava.library.path=${workspaceFolder}/build/jni/release" ],
+      "env": {
+        "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
+        "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
+      }
+    },
+  ],
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "java.import.gradle.annotationProcessing.enabled": false,
+  "java.completion.favoriteStaticMembers": [
+    "org.junit.Assert.*",
+    "org.junit.Assume.*",
+    "org.junit.jupiter.api.Assertions.*",
+    "org.junit.jupiter.api.Assumptions.*",
+    "org.junit.jupiter.api.DynamicContainer.*",
+    "org.junit.jupiter.api.DynamicTest.*",
+    "org.mockito.Mockito.*",
+    "org.mockito.ArgumentMatchers.*",
+    "org.mockito.Answers.*",
+    "edu.wpi.first.units.Units.*"
+  ],
+  "java.completion.filteredTypes": [
+    "java.awt.*",
+    "com.sun.*",
+    "sun.*",
+    "jdk.*",
+    "org.graalvm.*",
+    "io.micrometer.shaded.*",
+    "java.beans.*",
+    "java.util.Base64.*",
+    "java.util.Timer",
+    "java.sql.*",
+    "javax.swing.*",
+    "javax.management.*",
+    "javax.smartcardio.*",
+    "edu.wpi.first.math.proto.*",
+    "edu.wpi.first.math.**.proto.*",
+    "edu.wpi.first.math.**.struct.*",
+  ],
+  "java.dependency.enableDependencyCheckup": false,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#e5d2de",
+    "activityBar.background": "#e5d2de",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#778d52",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#e5d2de",
+    "statusBar.background": "#d3b1c6",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#c190ae",
+    "statusBarItem.remoteBackground": "#d3b1c6",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#d3b1c6",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#d3b1c699",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#d3b1c6"
+}
