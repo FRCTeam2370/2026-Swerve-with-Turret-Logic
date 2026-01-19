@@ -168,7 +168,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public static Rotation2d turretRotationToPose(Pose2d pose){
     Pose2d turretpose = turretToField();
     double thetaWorldToTarget = Math.atan2((turretpose.getY() - pose.getY()), (turretpose.getX() - pose.getX()));
-    double thetaTurretToTarget = thetaWorldToTarget + Math.PI - getRotation2d().getRadians() - (Math.toRadians(gyro.getAngularVelocityZWorld().getValueAsDouble()) * 0.02);// adding pi here is an offset
+    double thetaTurretToTarget = thetaWorldToTarget + Math.PI// adding pi here is an offset
+     - getRotation2d().getRadians() //subtracting the robot's rotation
+     - (Math.toRadians(gyro.getAngularVelocityZWorld().getValueAsDouble()) * 0.02);//adding angular velocity lookahead
 
     return Rotation2d.fromRadians(thetaTurretToTarget);
   }
