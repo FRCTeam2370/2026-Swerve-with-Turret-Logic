@@ -50,6 +50,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.SwerveModule;
+import frc.robot.Constants.FieldConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
   public static Pigeon2 gyro = new Pigeon2(Constants.SwerveConstants.pigeonID);
@@ -133,6 +134,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // SmartDashboard.putNumber("Odometry x", odometry.getPoseMeters().getX());
     // SmartDashboard.putNumber("Odometry y", odometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("Calculated Turret Angle", turretRotationToPose(FieldConstants.HubFieldPose).getDegrees());
 
     updateOdometry();
     //odometry.update(getRotation2d(), getModulePositions());//USE THIS WHEN TESTING AUTOS WITHOUT FIELD LOCALIZATION
@@ -145,21 +147,23 @@ public class SwerveSubsystem extends SubsystemBase {
     publisher.set(poseEstimator.getEstimatedPosition());
   }
 
+  //This method calculates the position of the turret relative to the field 
+  //It uses the position of the turret relative to the robot relative to the field
   public static Pose2d turretToField(){
     double xlocal = RobotToTurret.getX();
     double ylocal = RobotToTurret.getY();
 
-    double xGlobal = xlocal * Math.cos(getRotation2d().getRadians()) - ylocal * Math.sin(getRotation2d().getRadians()) + poseEstimator.getEstimatedPosition().getX();
+    double xGlobal = xlocal * Math.cos(getRotation2d().getRadians()) + ylocal * Math.sin(getRotation2d().getRadians()) + poseEstimator.getEstimatedPosition().getX();
     double yGlobal = ylocal * Math.cos(getRotation2d().getRadians()) + xlocal * Math.sin(getRotation2d().getRadians()) + poseEstimator.getEstimatedPosition().getY();
 
     return new Pose2d(xGlobal, yGlobal, poseEstimator.getEstimatedPosition().getRotation());
   }
 
+  //This method calculates the angle from the turret to the target Pose2d
   public static Rotation2d turretRotationToPose(Pose2d pose){
     Pose2d turretpose = turretToField();
-    //double thetaWorldToTarget = Math.atan2((turretpose.getX() - pose.getX()), (turretpose.getY() - pose.getY()));
     double thetaWorldToTarget = Math.atan2((turretpose.getY() - pose.getY()), (turretpose.getX() - pose.getX()));
-    double thetaTurretToTarget = thetaWorldToTarget + Math.PI;// adding pi here is an offset
+    double thetaTurretToTarget = thetaWorldToTarget + Math.PI - getRotation2d().getRadians();// adding pi here is an offset
 
     return Rotation2d.fromRadians(thetaTurretToTarget);
   }

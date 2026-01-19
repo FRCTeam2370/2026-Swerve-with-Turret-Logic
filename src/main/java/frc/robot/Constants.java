@@ -16,6 +16,16 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 /** Add your docs here. */
 public class Constants {
+    public static class TurretConstants{
+        public static final int TurretRotationID = 7;
+
+        public static final double turretRatio = 46.8;
+    }
+
+    public static class FieldConstants {
+        public static final Pose2d HubFieldPose = new Pose2d(0,0, new Rotation2d());        
+    }
+
     public static class SwerveConstants {
         // Drive and turn gear ratios for the mk 5 module
         public static final double RTurnRatio = 26.09;
