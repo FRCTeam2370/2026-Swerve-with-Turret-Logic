@@ -45,12 +45,12 @@ public class TurretSubsystem extends SubsystemBase {
     turretRotationMotor.setNeutralMode(NeutralModeValue.Coast);
     turretRotationMotor.setPosition(0);
 
-    turretRotConfig.Slot0.kP = 0.35;
+    turretRotConfig.Slot0.kP = 0.5;
     turretRotConfig.Slot0.kI = 0.0;
-    turretRotConfig.Slot0.kD = 0.005;
+    turretRotConfig.Slot0.kD = 0.0;
 
-    turretRotConfig.MotionMagic.MotionMagicAcceleration = 240;
-    turretRotConfig.MotionMagic.MotionMagicCruiseVelocity = 120;
+    turretRotConfig.MotionMagic.MotionMagicAcceleration = 1000;
+    turretRotConfig.MotionMagic.MotionMagicCruiseVelocity = 125;
 
     turretRotConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 

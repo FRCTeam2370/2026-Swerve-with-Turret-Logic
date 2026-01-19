@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -49,6 +51,7 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.Robot;
 import frc.robot.SwerveModule;
 import frc.robot.Constants.FieldConstants;
 
@@ -69,7 +72,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private static Pose2d limelightPose, limelight2Pose;
 
-  private static Transform2d RobotToTurret = new Transform2d(-0.1, 0, Rotation2d.fromDegrees(0));
+  private static Transform2d RobotToTurret = new Transform2d(-0.1651, 0, Rotation2d.fromDegrees(0));
   private static FieldObject2d turret = field.getObject("Turret");
   private static FieldObject2d HubFieldPose = field.getObject("HubPose");
   private static Pose2d HubPose = new Pose2d(0,0, new Rotation2d());
@@ -113,6 +116,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    SmartDashboard.putNumber("Robot Rotational Velocity", gyro.getAngularVelocityZWorld().getValueAsDouble());
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Mod 0 CAN Pose", Rotation2d.fromDegrees(mSwerveModules[0].getCANcoder().getDegrees()).getDegrees());
     // SmartDashboard.putNumber("Mod 1 CAN Pose", Rotation2d.fromDegrees(mSwerveModules[1].getCANcoder().getDegrees()).getDegrees());
@@ -163,7 +168,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public static Rotation2d turretRotationToPose(Pose2d pose){
     Pose2d turretpose = turretToField();
     double thetaWorldToTarget = Math.atan2((turretpose.getY() - pose.getY()), (turretpose.getX() - pose.getX()));
-    double thetaTurretToTarget = thetaWorldToTarget + Math.PI - getRotation2d().getRadians();// adding pi here is an offset
+    double thetaTurretToTarget = thetaWorldToTarget + Math.PI - getRotation2d().getRadians() - (Math.toRadians(gyro.getAngularVelocityZWorld().getValueAsDouble()) * 0.02);// adding pi here is an offset
 
     return Rotation2d.fromRadians(thetaTurretToTarget);
   }
